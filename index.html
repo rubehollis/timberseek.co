@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Timberseek turns live construction permit data into prioritized sales leads for lumber yards, millwork and truss shops, and building-material distributors.">
+<title>Timberseek</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+
+<style>
+  /* Layout concept: industrial trade-publication — modular bands, left-aligned, rule-line vocabulary, mono numerals, real permit-record detail. */
+
+  :root {
+    --bg:       #F2EEE4;
+    --paper:    #FBF8F0;
+    --fg:       #1A1F1C;
+    --muted:    #6B6355;
+    --rule:     #D4CDBE;
+    --accent:   #B8691E;
+    --forest:   #2A3B2F;
+    --forest-hover: #1A2A1F;
+    --mark:     #8B4513;
+    --panel-fg: #FBF8F0;
+    --tag-bg:   rgba(184, 105, 30, 0.10);
+
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --body:    "IBM Plex Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono:    "IBM Plex Mono", "SF Mono", "Courier New", monospace;
+
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:       #141615;
+      --paper:    #1C1F1D;
+      --fg:       #E8E4DA;
+      --muted:    #8E887B;
+      --rule:     #2C2F2D;
+      --accent:   #D89550;
+      --forest:   #3F5A47;
+      --forest-hover: #4A6B52;
+      --mark:     #B86F3F;
+      --panel-fg: #E8E4DA;
+      --tag-bg:   rgba(216, 149, 80, 0.12);
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:       #141615;
+    --paper:    #1C1F1D;
+    --fg:       #E8E4DA;
+    --muted:    #8E887B;
+    --rule:     #2C2F2D;
+    --accent:   #D89550;
+    --forest:   #3F5A47;
+    --forest-hover: #4A6B52;
+    --mark:     #B86F3F;
+    --panel-fg: #E8E4DA;
+    --tag-bg:   rgba(216, 149, 80, 0.12);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    padding-block: 0;
+    padding-left:  max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  .page { max-width: 1120px; margin: 0 auto; }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--mark); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  /* ─── NAV ─────────────────────────────────────────────── */
+  nav.topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .brand {
+    display: inline-flex; align-items: baseline; gap: 10px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    font-variation-settings: "SOFT" 20, "WONK" 0;
+    text-transform: none;
+  }
+  .brand .tm {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    translate: 0 -8px;
+  }
+  .brand .star {
+    width: 14px; height: 14px; display: inline-block; color: var(--accent);
+  }
+  nav .status { display: flex; gap: 20px; align-items: center; }
+  nav .status .dot {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); margin-right: 7px; vertical-align: middle;
+  }
+  nav .status .mobile-hide { display: inline; }
+  @media (max-width: 540px) {
+    nav .status .mobile-hide { display: none; }
+    nav.topbar { font-size: 11px; }
+    .brand { font-size: 19px; }
+  }
+
+  /* ─── HERO ────────────────────────────────────────────── */
+  section.hero {
+    padding-block: 72px 56px;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 820px) {
+    section.hero { grid-template-columns: 1fr; gap: 40px; padding-block: 48px 40px; }
+  }
+
+  .hero .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .hero .eyebrow::before {
+    content: ""; width: 24px; height: 1px; background: var(--accent); display: inline-block;
+  }
+
+  h1.hero-title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 20, "opsz" 144;
+    font-size: clamp(38px, 5.6vw, 64px);
+    line-height: 1.03;
+    letter-spacing: -0.025em;
+    margin: 0 0 24px;
+    text-wrap: balance;
+    color: var(--fg);
+  }
+  h1.hero-title em {
+    font-style: italic;
+    font-variation-settings: "SOFT" 50, "opsz" 144;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .hero p.lede {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 54ch;
+    margin: 0 0 36px;
+  }
+
+  .cta-row {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    margin-bottom: 28px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 22px;
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: translate 0.15s ease, background 0.15s ease;
+  }
+  .btn:active { translate: 0 1px; }
+  .btn-primary {
+    background: var(--forest); color: var(--panel-fg);
+    border-color: var(--forest);
+  }
+  .btn-primary:hover { background: var(--forest-hover); color: var(--panel-fg); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--fg);
+    border-color: var(--rule);
+  }
+  .btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
+
+  .hero .trust {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hero .trust b { color: var(--fg); font-weight: 600; }
+
+  /* ─── PERMIT CARD (hero right) ────────────────────────── */
+  .permit-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 24px;
+    position: relative;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .permit-card::before {
+    content: "SAMPLE RECORD";
+    position: absolute; top: -1px; right: -1px;
+    background: var(--accent); color: var(--panel-fg);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 5px 10px;
+  }
+  .permit-card h3 {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--rule);
+    text-transform: none;
+  }
+  .permit-row {
+    display: grid; grid-template-columns: 100px 1fr;
+    gap: 10px;
+    padding-block: 5px;
+  }
+  .permit-row:not(:last-child) { border-bottom: 1px dotted var(--rule); }
+  .permit-row .label { color: var(--muted); letter-spacing: 0.06em; font-size: 11px; text-transform: uppercase; align-self: center; }
+  .permit-row .value { color: var(--fg); font-weight: 500; }
+  .permit-row .value.hi { color: var(--accent); font-weight: 600; }
+  .permit-score {
+    margin-top: 16px;
+    padding: 10px 12px;
+    background: var(--tag-bg);
+    border-left: 3px solid var(--accent);
+  }
+  .permit-score .label {
+    font-size: 10px; letter-spacing: 0.14em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .permit-score .value {
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .permit-score .value small {
+    font-family: var(--body); font-size: 11px; color: var(--muted);
+    font-weight: 500; letter-spacing: 0; margin-left: 6px;
+  }
+  .permit-score .parts {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── SECTION BASICS ──────────────────────────────────── */
+  section.band {
+    padding-block: 72px;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 540px) {
+    section.band { padding-block: 48px; }
+  }
+
+  .section-head { margin-bottom: 48px; max-width: 56ch; }
+  .section-head .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .section-head h2 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 20, "opsz" 72;
+    font-size: clamp(28px, 3.6vw, 42px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  .section-head p {
+    font-size: 17px;
+    color: var(--muted);
+    margin: 0;
+    max-width: 54ch;
+  }
+
+  /* ─── 3-UP GRID ───────────────────────────────────────── */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+  @media (max-width: 820px) { .grid-3 { grid-template-columns: 1fr; gap: 28px; } }
+
+  .pillar {
+    border-top: 1px solid var(--fg);
+    padding-top: 22px;
+    min-width: 0;
+  }
+  .pillar .no {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: block;
+    text-transform: uppercase;
+  }
+  .pillar h3 {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  .pillar p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+
+  /* proof line: real figures from a market report */
+  .proof {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--rule);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px 24px;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .proof .tag {
+    font-size: 10.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .proof b { color: var(--fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+  @media (max-width: 540px) { .proof { grid-template-columns: 1fr; } }
+
+  /* ─── HOW IT WORKS (steps) ─────────────────────────────── */
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .step {
+    padding: 32px 28px;
+    border-right: 1px solid var(--rule);
+    min-width: 0;
+  }
+  .step:last-child { border-right: none; }
+  @media (max-width: 820px) {
+    .steps { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid var(--rule); }
+    .step:last-child { border-bottom: none; }
+  }
+  .step .step-no {
+    font-family: var(--display);
+    font-size: 56px;
+    font-weight: 500;
+    font-variation-settings: "opsz" 144;
+    color: var(--accent);
+    line-height: 0.9;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .step h3 {
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  .step p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* ─── AUDIENCE LIST ───────────────────────────────────── */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  @media (max-width: 540px) { .audience-grid { grid-template-columns: 1fr; } }
+  .audience-grid > div {
+    background: var(--bg);
+    padding: 20px 22px;
+    display: flex; align-items: baseline; gap: 14px;
+    min-width: 0;
+  }
+  .audience-grid .idx {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    min-width: 24px;
+  }
+  .audience-grid .name {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .audience-grid .sub {
+    display: block;
+    font-family: var(--body);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  /* ─── DATA PANEL ──────────────────────────────────────── */
+  .data-panel {
+    background: var(--forest);
+    color: var(--panel-fg);
+    margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+    margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+    padding-block: 72px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .data-panel .inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-left:  max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .data-panel .section-head h2,
+  .data-panel .section-head p { color: var(--panel-fg); }
+  .data-panel .section-head p { opacity: 0.78; }
+  .data-panel .section-head .eyebrow { color: var(--accent); opacity: 1; }
+
+  .data-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+    border-top: 1px solid rgba(251,248,240,0.2);
+    padding-top: 32px;
+  }
+  @media (max-width: 820px) { .data-stats { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 400px) { .data-stats { grid-template-columns: 1fr; } }
+  .data-stat .figure {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(32px, 4.6vw, 48px);
+    line-height: 1;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .data-stat .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    line-height: 1.4;
+  }
+
+  /* ─── CTA BAND ────────────────────────────────────────── */
+  .cta-band {
+    padding-block: 80px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 56px;
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+  }
+  @media (max-width: 820px) {
+    .cta-band { grid-template-columns: 1fr; gap: 32px; padding-block: 56px; }
+  }
+  .cta-band h2 {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .cta-band p {
+    color: var(--muted);
+    font-size: 16.5px;
+    margin: 0;
+  }
+  form.signup {
+    display: grid;
+    gap: 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 28px;
+  }
+  form.signup .fields { display: grid; gap: 14px; }
+  form.signup .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    display: block;
+  }
+  form.signup input[type="email"],
+  form.signup input[type="text"],
+  form.signup select {
+    width: 100%;
+    font-family: var(--body);
+    font-size: 15px;
+    padding: 12px 14px;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    color: var(--fg);
+    border-radius: 2px;
+  }
+  form.signup input:focus,
+  form.signup select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+    border-color: var(--accent);
+  }
+  form.signup button {
+    margin-top: 6px;
+    width: 100%;
+    justify-content: center;
+  }
+  form.signup .fine {
+    font-family: var(--body);
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  form.signup .error {
+    font-size: 13.5px;
+    color: var(--mark);
+  }
+  form.signup .success {
+    display: none;
+    padding: 16px 18px;
+    background: var(--tag-bg);
+    border-left: 3px solid var(--accent);
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--fg);
+  }
+  form.signup .success p { margin: 0 0 10px; font-size: 14.5px; color: var(--fg); }
+  form.signup .success p:last-child { margin-bottom: 0; }
+  form.signup .addr {
+    display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 13.5px;
+    user-select: all;
+  }
+  form.signup .copy {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border: 1px solid var(--rule); background: var(--paper); color: var(--fg);
+    border-radius: 2px; cursor: pointer;
+  }
+  form.signup.sent .fields { display: none; }
+  form.signup.sent .success { display: block; }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  footer.foot {
+    padding-block: 44px 36px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 540px) {
+    footer.foot { grid-template-columns: 1fr; }
+  }
+  footer.foot .meta { line-height: 1.65; }
+  footer.foot .meta b { color: var(--fg); font-weight: 600; }
+  footer.foot .legal { text-align: right; line-height: 1.65; }
+  @media (max-width: 540px) { footer.foot .legal { text-align: left; } }
+  footer.foot a { color: var(--muted); text-decoration-color: var(--rule); }
+  footer.foot a:hover { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="topbar">
+    <span class="brand">
+      <svg class="star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1l1.9 6.3L18 9l-5.2 3.5 1.3 5.5L10 15.3 5.9 18l1.3-5.5L2 9l6.1-1.7z"/></svg>
+      Timberseek <span class="tm">™</span>
+    </span>
+    <span class="status">
+      <span><span class="dot"></span>PILOTS OPEN<span class="mobile-hide"> · Q4 2026</span></span>
+    </span>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <span class="eyebrow">Permit intelligence for the timber trade</span>
+      <h1 class="hero-title">
+        Find the builders buying lumber in your territory <em>before your competitors do.</em>
+      </h1>
+      <p class="lede">
+        Timberseek turns live construction permit data into a prioritized list of warm sales leads
+        for lumber yards, millwork shops, truss manufacturers, and building-material distributors.
+      </p>
+      <div class="cta-row">
+        <a href="#request" class="btn btn-primary">Request a pilot
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+        </a>
+        <a href="#how" class="btn btn-ghost">See how it works</a>
+      </div>
+      <p class="trust">
+        Built in Miami · <b>48 permit sources</b> · 20 states
+      </p>
+    </div>
+
+    <aside class="permit-card" aria-label="Sample permit record">
+      <h3>Building permit · scored</h3>
+      <div class="permit-row"><span class="label">Permit no.</span><span class="value">BLDG-2026-04782</span></div>
+      <div class="permit-row"><span class="label">Type</span><span class="value">NEW SFR · 1 UNIT</span></div>
+      <div class="permit-row"><span class="label">Address</span><span class="value">4821 NW 54 TER, MIAMI</span></div>
+      <div class="permit-row"><span class="label">Issued</span><span class="value">2026-10-18</span></div>
+      <div class="permit-row"><span class="label">Stage</span><span class="value hi">ISSUED</span></div>
+      <div class="permit-row"><span class="label">Lumber tier</span><span class="value">NEW CONSTRUCTION</span></div>
+      <div class="permit-row"><span class="label">Builder</span><span class="value">12 NEW HOMES · 180 DAYS</span></div>
+      <div class="permit-row"><span class="label">Contact</span><span class="value">PHONE ON PERMIT</span></div>
+      <div class="permit-score">
+        <div class="label">Timberseek score</div>
+        <div class="value">45<small>/ 50 · high priority</small></div>
+        <div class="parts">Stage 15 · Lumber 15 · Builder 10 · Contact 5</div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- WHAT IT DOES -->
+  <section class="band" id="what">
+    <div class="section-head">
+      <span class="eyebrow">What Timberseek does</span>
+      <h2>Three jobs the data does for your sales team.</h2>
+      <p>No tags, no fluff. The product is a prioritized list of builders starting projects in your territory,
+         ranked by how likely they are to be buying framing material now.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="pillar">
+        <span class="no">01 — Intelligence</span>
+        <h3>Live permit coverage.</h3>
+        <p>We pull from 48 county and city permit portals across 20 states. New homes, additions,
+           and remodels. Each run reports only the permits you haven't seen before.</p>
+      </div>
+      <div class="pillar">
+        <span class="no">02 — Prioritization</span>
+        <h3>Scored on what the permit says.</h3>
+        <p>Four signals, all from the permit record: how far along the job is, how much lumber the work uses
+           (new construction, remodel or outdoor), how many jobs the builder has going, and whether contact
+           details are on file. Scores run from 0 to 50.</p>
+      </div>
+      <div class="pillar">
+        <span class="no">03 — Timing</span>
+        <h3>Follow the job after the permit.</h3>
+        <p>Every source's permit status is mapped to the same stages (submitted, issued, inspection, final),
+           so a builder's jobs read the same in any market, and newly issued jobs rank first.
+           In Florida, Timberseek also matches Notice of Commencement filings.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="band" id="how">
+    <div class="section-head">
+      <span class="eyebrow">How it works</span>
+      <h2>From public record to warm lead in three steps.</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-no">1.</span>
+        <h3>Pull</h3>
+        <p>We query county and city permit portals on ArcGIS, Socrata, CKAN, and OpenDataSoft, and normalize
+           every record to one format: contractor, job address, permit type, and status.</p>
+      </div>
+      <div class="step">
+        <span class="step-no">2.</span>
+        <h3>Score</h3>
+        <p>Each permit is scored from 0 to 50 on its stage, lumber tier, builder activity and contact details.
+           A project's sub-permits count once, and trade-only permits are set aside. Contact enrichment is
+           available as an option: email and phone from the permit where listed, or a Google business lookup
+           when only a name is on file.</p>
+      </div>
+      <div class="step">
+        <span class="step-no">3.</span>
+        <h3>Deliver</h3>
+        <p>A prioritized lead list in CSV, grouped by how you can reach each contractor
+           (email and phone, phone only, or name only), plus a market report that ranks your markets
+           and the builders in them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="band" id="get">
+    <div class="section-head">
+      <span class="eyebrow">What you get</span>
+      <h2>More than a list of permits.</h2>
+      <p>The same permit data, worked into the three things a sales team asks for first:
+         where to sell, who to call, and leads that are worth the call.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="pillar">
+        <span class="no">Market reports</span>
+        <h3>See where the lumber is going.</h3>
+        <p>Every market and every builder in it is ranked by lumber-weighted permit activity, so a county
+           full of new homes outranks one full of kitchen remodels. Job values come with each market where
+           the city publishes them.</p>
+      </div>
+      <div class="pillar">
+        <span class="no">Your search</span>
+        <h3>Built around what you sell.</h3>
+        <p>When you start, we capture your job profile: the job types you supply, the permit stages you want
+           to hear about, job size, and the markets you cover. Your lead list is tuned to it.</p>
+      </div>
+      <div class="pillar">
+        <span class="no">Clean leads</span>
+        <h3>Worth the phone call.</h3>
+        <p>No electricians, pool contractors or permit-filing services. A project with ten sub-permits counts
+           once, remodels are not counted as new homes, and mistyped job values are dropped.</p>
+      </div>
+    </div>
+
+    <div class="proof">
+      <span class="tag">From a live report</span>
+      <span>Florida, May 5 to Nov 1, 2026: <b>5,307</b> permits across <b>3</b> markets,
+        <b>1,625</b> of them new construction, every builder ranked.</span>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="band" id="who">
+    <div class="section-head">
+      <span class="eyebrow">Who it's for</span>
+      <h2>Built for the people who sell lumber and millwork for a living.</h2>
+    </div>
+
+    <div class="audience-grid">
+      <div>
+        <span class="idx">01</span>
+        <span>
+          <span class="name">Lumber yards</span>
+          <span class="sub">Single-location and multi-yard operators selling to residential and light-commercial GCs.</span>
+        </span>
+      </div>
+      <div>
+        <span class="idx">02</span>
+        <span>
+          <span class="name">Millwork &amp; truss</span>
+          <span class="sub">Component manufacturers who need to engage framers before the shop drawings get awarded.</span>
+        </span>
+      </div>
+      <div>
+        <span class="idx">03</span>
+        <span>
+          <span class="name">Building-material distributors</span>
+          <span class="sub">Fasteners, panels, siding, roofing — anyone whose material spec sits inside a framing package.</span>
+        </span>
+      </div>
+      <div>
+        <span class="idx">04</span>
+        <span>
+          <span class="name">Independent reps</span>
+          <span class="sub">Account managers covering a territory who want their own data pipeline, not their yard's.</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA PANEL -->
+  <div class="data-panel">
+    <div class="inner">
+      <div class="section-head">
+        <span class="eyebrow">The data behind it</span>
+        <h2>Public records, cleaned up, scored, and delivered.</h2>
+        <p>Timberseek doesn't invent leads. We aggregate what's already public — construction permits —
+           and turn it into something a sales team can actually act on.</p>
+      </div>
+
+      <div class="data-stats">
+        <div class="data-stat">
+          <div class="figure">48</div>
+          <div class="label">Live permit<br>sources</div>
+        </div>
+        <div class="data-stat">
+          <div class="figure">20</div>
+          <div class="label">States<br>covered</div>
+        </div>
+        <div class="data-stat">
+          <div class="figure">4</div>
+          <div class="label">Permit signals<br>in every score</div>
+        </div>
+        <div class="data-stat">
+          <div class="figure">4</div>
+          <div class="label">Open-data portal<br>platforms supported</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA / SIGNUP -->
+  <section class="cta-band" id="request">
+    <div>
+      <h2>Request a pilot.</h2>
+      <p>We'll set up a search for the markets you sell into, tuned to the jobs you want, and send you scored
+         leads to work. After the pilot, subscriptions are priced by market, in Starter, Professional and
+         Premium tiers. Tell us about your operation and we'll be in touch within three business days.</p>
+      <p style="margin-top:14px;font-size:14px;">
+        Prefer email? Write <a href="mailto:hello@timberseek.co">hello@timberseek.co</a>.
+      </p>
+    </div>
+
+    <form class="signup" id="signupForm" novalidate>
+      <div class="fields">
+        <div>
+          <label class="label" for="f-name">Your name</label>
+          <input type="text" id="f-name" name="name" required autocomplete="name">
+        </div>
+        <div>
+          <label class="label" for="f-email">Work email</label>
+          <input type="email" id="f-email" name="email" required autocomplete="email">
+        </div>
+        <div>
+          <label class="label" for="f-company">Company</label>
+          <input type="text" id="f-company" name="company" autocomplete="organization">
+        </div>
+        <div>
+          <label class="label" for="f-markets">Markets you sell into</label>
+          <input type="text" id="f-markets" name="markets" placeholder="e.g. Miami-Dade, Broward" autocomplete="off">
+        </div>
+        <div>
+          <label class="label" for="f-type">You are a…</label>
+          <select id="f-type" name="type">
+            <option>Lumber yard</option>
+            <option>Millwork or truss shop</option>
+            <option>Building-material distributor</option>
+            <option>Independent sales rep</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="error" id="f-error" hidden>Add your name and a valid work email.</div>
+        <button type="submit" class="btn btn-primary">
+          Request a pilot
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+        </button>
+        <div class="fine">
+          This opens your email app with your request filled in, addressed to hello@timberseek.co.
+          We use your details only to talk with you about a pilot. No marketing lists, no resale of your email.
+        </div>
+      </div>
+      <div class="success" role="status">
+        <p><strong>Your email app should open with your request.</strong> Send it and we'll reply within three business days.</p>
+        <p>If nothing opened, email us directly:
+          <span class="addr"><span id="f-addr">hello@timberseek.co</span>
+            <button type="button" class="copy" id="f-copy">Copy</button></span></p>
+      </div>
+    </form>
+  </section>
+
+  <footer class="foot">
+    <div class="meta">
+      <b>Timberseek™</b> is a service mark of Timberseek LLC.<br>
+      Miami, Florida · All rights reserved.
+    </div>
+    <div class="legal">
+      <a href="mailto:hello@timberseek.co">hello@timberseek.co</a><br>
+      <a href="#request">Request a pilot</a> · <a href="#how">How it works</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Pilot request form. There is no form backend yet, so the request is
+  // handed to the visitor's email app, addressed to hello@timberseek.co,
+  // and the address is shown for copying in case no email app opens.
+  // To collect requests on the site instead, send FormData(form) to a form
+  // service (Formspree, Basin, your own endpoint) in place of the mailto step.
+  (function () {
+    var form = document.getElementById('signupForm');
+    if (!form) return;
+    var TO = 'hello@timberseek.co';
+    var err = document.getElementById('f-error');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = function (id) { return form.querySelector(id).value.trim(); };
+      var name = v('#f-name'), email = v('#f-email');
+      if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        err.hidden = false;
+        form.querySelector(name ? '#f-email' : '#f-name').focus();
+        return;
+      }
+      err.hidden = true;
+      var company = v('#f-company'), markets = v('#f-markets'), type = v('#f-type');
+      var subject = 'Pilot request' + (company ? ': ' + company : '');
+      var body = [
+        'Name: ' + name,
+        'Email: ' + email,
+        'Company: ' + (company || '-'),
+        'Markets: ' + (markets || '-'),
+        'Business type: ' + type
+      ].join('\n');
+      form.classList.add('sent');
+      var success = form.querySelector('.success');
+      if (success) success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      window.location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+    });
+    var copy = document.getElementById('f-copy');
+    if (copy) copy.addEventListener('click', function () {
+      var done = function () { copy.textContent = 'Copied'; };
+      try {
+        navigator.clipboard.writeText(TO).then(done, function () { selectAddr(); });
+      } catch (e) { selectAddr(); }
+    });
+    function selectAddr() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('f-addr'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+  })();
+</script>
+</body>
+</html>
