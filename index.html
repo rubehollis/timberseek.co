@@ -286,6 +286,12 @@
     color: var(--muted);
     letter-spacing: 0.02em;
   }
+  .permit-note {
+    margin: 10px 0 0;
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
 
   /* ─── SECTION BASICS ──────────────────────────────────── */
   section.band {
@@ -637,6 +643,7 @@
     .btn { transition: none; }
   }
 </style>
+
 </head>
 <body>
 <div class="page">
@@ -673,20 +680,22 @@
     </div>
 
     <aside class="permit-card" aria-label="Sample permit record">
-      <h3>Building permit · scored</h3>
-      <div class="permit-row"><span class="label">Permit no.</span><span class="value">BLDG-2026-04782</span></div>
-      <div class="permit-row"><span class="label">Type</span><span class="value">NEW SFR · 1 UNIT</span></div>
-      <div class="permit-row"><span class="label">Address</span><span class="value">4821 NW 54 TER, MIAMI</span></div>
-      <div class="permit-row"><span class="label">Issued</span><span class="value">2026-10-18</span></div>
-      <div class="permit-row"><span class="label">Stage</span><span class="value hi">ISSUED</span></div>
-      <div class="permit-row"><span class="label">Lumber tier</span><span class="value">NEW CONSTRUCTION</span></div>
-      <div class="permit-row"><span class="label">Builder</span><span class="value">12 NEW HOMES · 180 DAYS</span></div>
-      <div class="permit-row"><span class="label">Contact</span><span class="value">PHONE ON PERMIT</span></div>
+      <h3>One row of your lead list</h3>
+      <div class="permit-row"><span class="label">Contractor</span><span class="value">COASTLINE HOMES LLC</span></div>
+      <div class="permit-row"><span class="label">Phone</span><span class="value">(305) 555-0142</span></div>
+      <div class="permit-row"><span class="label">Email</span><span class="value">NOT ON PERMIT</span></div>
+      <div class="permit-row"><span class="label">Job site</span><span class="value">4821 NW 54 TER, MIAMI</span></div>
+      <div class="permit-row"><span class="label">Work</span><span class="value hi">NEW SFR · NEW CONSTRUCTION</span></div>
+      <div class="permit-row"><span class="label">Status</span><span class="value hi">ISSUED 2026-10-18</span></div>
+      <div class="permit-row"><span class="label">Permit</span><span class="value">2026-104782 · MIAMI-DADE CO.</span></div>
+      <div class="permit-row"><span class="label">Builder</span><span class="value">12 NEW HOMES IN 180 DAYS</span></div>
+      <div class="permit-row"><span class="label">Group</span><span class="value">PHONE ONLY · CALL LIST</span></div>
       <div class="permit-score">
         <div class="label">Timberseek score</div>
         <div class="value">45<small>/ 50 · high priority</small></div>
-        <div class="parts">Stage 15 · Lumber 15 · Builder 10 · Contact 5</div>
+        <div class="parts">Stage 15 · Lumber 15 · Builder 10 · Contact 5 of 10</div>
       </div>
+      <p class="permit-note">Illustrative record. Names and numbers are made up.</p>
     </aside>
   </section>
 
@@ -984,5 +993,6 @@
     }
   })();
 </script>
+
 </body>
 </html>
