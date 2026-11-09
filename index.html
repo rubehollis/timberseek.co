@@ -549,8 +549,9 @@
     min-width: 0;
   }
   .price:last-child { border-right: none; }
+  .price-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @media (max-width: 820px) {
-    .price-grid { grid-template-columns: 1fr; }
+    .price-grid, .price-grid.two { grid-template-columns: 1fr; }
     .price { border-right: none; border-bottom: 1px solid var(--rule); }
     .price:last-child { border-bottom: none; }
   }
@@ -592,37 +593,6 @@
     color: var(--muted);
   }
   .price-terms li::before { content: "✓ "; color: var(--accent); font-weight: 600; }
-  .addons {
-    margin-top: 44px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  @media (max-width: 820px) { .addons { grid-template-columns: 1fr; } }
-  .addon {
-    border-top: 2px solid var(--line);
-    padding-top: 18px;
-    min-width: 0;
-  }
-  .addon .no {
-    font-family: var(--display);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-size: 15px;
-    display: block;
-    margin-bottom: 8px;
-  }
-  .addon h3 {
-    font-family: var(--display);
-    font-size: 28px;
-    font-weight: 700;
-    margin: 0 0 8px;
-    line-height: 1.05;
-  }
-  .addon h3 .p { color: var(--copper); white-space: nowrap; }
-  .addon p { margin: 0; color: var(--body-fg); font-size: 16px; }
 
   /* ─── CTA BAND ────────────────────────────────────────── */
   .cta-band {
@@ -939,25 +909,24 @@
     <div class="section-head">
       <span class="eyebrow">Pricing</span>
       <h2>One price per market. Free for the first 30 days.</h2>
-      <p>The Builder Feed is priced by how many builders are active in your metro area. No tiers,
-         no commission on the business you win, no contract.</p>
+      <p>One flat monthly price for each metro market you cover. No tiers, no commission on the
+         business you win, no contract.</p>
     </div>
 
-    <div class="price-grid">
+    <div class="price-grid two">
       <div class="price">
-        <div class="size">Under 250 active builders</div>
-        <div class="amt">$250<small>/ month</small></div>
-        <p class="eg">Smaller metros, such as Peoria or Mesa, Arizona.</p>
-      </div>
-      <div class="price">
-        <div class="size">250 to 750 active builders</div>
-        <div class="amt">$375<small>/ month</small></div>
-        <p class="eg">Mid-size metros, such as Naperville and the Chicago west suburbs.</p>
-      </div>
-      <div class="price">
-        <div class="size">Over 750 active builders</div>
+        <div class="size">Builder Feed · per metro market</div>
         <div class="amt">$500<small>/ month</small></div>
-        <p class="eg">Large metros, such as Raleigh–Durham–Cary or DeKalb County, Georgia.</p>
+        <p class="eg">Monday email led by what changed, Account Watch on your own accounts, and the full
+           scored list with email and phone. Unlimited users. Now in large metros such as
+           Raleigh–Durham–Cary and DeKalb County, Georgia.</p>
+      </div>
+      <div class="price">
+        <div class="size">Add-on · Builder Quote Desk</div>
+        <div class="amt">$750<small>/ month</small></div>
+        <p class="eg">Builders with a new permit who ask for a lumber or truss quote are sent to you, with the
+           permit attached. One supplier per trade per market, so you aren't bidding against another
+           subscriber. Free while it is piloted in a market.</p>
       </div>
     </div>
 
@@ -969,21 +938,6 @@
       <li>Cancel in one click</li>
     </ul>
 
-    <div class="addons">
-      <div class="addon">
-        <span class="no">Add-on</span>
-        <h3>Builder Quote Desk <span class="p">$199 / mo</span></h3>
-        <p>Builders with a new permit who ask for a lumber or truss quote are sent to you, with the permit
-           attached. One supplier per trade per market, so you aren't bidding against another subscriber.
-           Free while it is piloted in a market.</p>
-      </div>
-      <div class="addon">
-        <span class="no">For site services</span>
-        <h3>Site Services List <span class="p">$99 / mo</span></h3>
-        <p>For roll-off dumpster, portable toilet and temporary fence companies: a weekly list of permits
-           newly issued in your area. No scoring, no setup.</p>
-      </div>
-    </div>
   </section>
 
   <!-- AUDIENCE -->
@@ -1018,8 +972,8 @@
       <div>
         <span class="idx">04</span>
         <span>
-          <span class="name">Site services</span>
-          <span class="sub">Roll-off dumpsters, portable toilets and temporary fence. Every permit needs them.</span>
+          <span class="name">Building-material distributors</span>
+          <span class="sub">Panels, siding, roofing and fasteners: anything that ships inside a framing package.</span>
         </span>
       </div>
     </div>
@@ -1099,7 +1053,7 @@
             <option>Truss or wall-panel plant</option>
             <option>Lumber yard or building-material dealer</option>
             <option>Window, door, cabinet or millwork supplier</option>
-            <option>Site services (dumpsters, toilets, fence)</option>
+            <option>Building-material distributor</option>
             <option>Something else</option>
           </select>
         </div>
