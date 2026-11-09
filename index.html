@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Timberseek turns live construction permit data into prioritized sales leads for lumber yards, millwork and truss shops, and building-material distributors.">
+<meta name="description" content="A weekly Builder Feed for truss plants, lumber yards and building-material suppliers: who is pulling permits in your delivery radius, what changed, and how to reach them. Free for 30 days.">
 <title>Timberseek</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#1F4D3A">
@@ -534,6 +534,96 @@
     line-height: 1.4;
   }
 
+  /* ─── PRICING ─────────────────────────────────────────── */
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  .price {
+    padding: 28px 26px;
+    border-right: 1px solid var(--rule);
+    min-width: 0;
+  }
+  .price:last-child { border-right: none; }
+  @media (max-width: 820px) {
+    .price-grid { grid-template-columns: 1fr; }
+    .price { border-right: none; border-bottom: 1px solid var(--rule); }
+    .price:last-child { border-bottom: none; }
+  }
+  .price .size {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .price .amt {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .price .amt small {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+  .price .eg {
+    margin: 14px 0 0;
+    font-size: 15px;
+    color: var(--body-fg);
+  }
+  .price-terms {
+    list-style: none; padding: 0; margin: 28px 0 0;
+    display: flex; flex-wrap: wrap; gap: 10px 28px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .price-terms li::before { content: "✓ "; color: var(--accent); font-weight: 600; }
+  .addons {
+    margin-top: 44px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 820px) { .addons { grid-template-columns: 1fr; } }
+  .addon {
+    border-top: 2px solid var(--line);
+    padding-top: 18px;
+    min-width: 0;
+  }
+  .addon .no {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-size: 15px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .addon h3 {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.05;
+  }
+  .addon h3 .p { color: var(--copper); white-space: nowrap; }
+  .addon p { margin: 0; color: var(--body-fg); font-size: 16px; }
+
   /* ─── CTA BAND ────────────────────────────────────────── */
   .cta-band {
     padding-block: 80px;
@@ -694,7 +784,7 @@
       Timberseek <span class="tm">™</span>
     </a>
     <span class="status">
-      <span><span class="dot"></span>PILOTS OPEN<span class="mobile-hide"> · Q4 2026</span></span>
+      <span><span class="dot"></span>TRIALS OPEN<span class="mobile-hide"> · RALEIGH–DURHAM–CARY</span></span>
     </span>
   </nav>
 
@@ -705,35 +795,36 @@
         Find the builders buying lumber in your territory <em>before your competitors do.</em>
       </h1>
       <p class="lede">
-        Timberseek turns live construction permit data into a prioritized list of warm sales leads
-        for lumber yards, millwork shops, truss manufacturers, and building-material distributors.
+        Every Monday, Timberseek emails truss plants, lumber yards and building-material suppliers
+        the builders pulling permits inside their delivery radius: who is new, who is busier, and
+        how to reach them, with the email and phone taken straight from the permit.
       </p>
       <div class="cta-row">
-        <a href="#request" class="btn btn-primary">Request a pilot
+        <a href="#request" class="btn btn-primary">Start a free trial
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
         </a>
         <a href="#how" class="btn btn-ghost">See how it works</a>
       </div>
       <p class="trust">
-<b>48 permit sources</b> · 20 states · <b>90-day pilot</b>, no cost unless a builder buys
+<b>Free for 30 days</b> · no card to start · <b>no commission</b>, no contract
       </p>
     </div>
 
     <aside class="permit-card" aria-label="Sample permit record">
       <h3>One row of your lead list</h3>
-      <div class="permit-row"><span class="label">Contractor</span><span class="value">COASTLINE HOMES LLC</span></div>
-      <div class="permit-row"><span class="label">Phone</span><span class="value">(305) 555-0142</span></div>
-      <div class="permit-row"><span class="label">Email</span><span class="value">NOT ON PERMIT</span></div>
-      <div class="permit-row"><span class="label">Job site</span><span class="value">4821 NW 54 TER, MIAMI</span></div>
+      <div class="permit-row"><span class="label">Contractor</span><span class="value">OAK HOLLOW BUILDERS LLC</span></div>
+      <div class="permit-row"><span class="label">Phone</span><span class="value">(919) 555-0142</span></div>
+      <div class="permit-row"><span class="label">Email</span><span class="value hi">ON PERMIT</span></div>
+      <div class="permit-row"><span class="label">Job site</span><span class="value">4821 BIRCH RUN DR, RALEIGH</span></div>
       <div class="permit-row"><span class="label">Work</span><span class="value hi">NEW SFR · NEW CONSTRUCTION</span></div>
-      <div class="permit-row"><span class="label">Status</span><span class="value hi">ISSUED 2026-10-18</span></div>
-      <div class="permit-row"><span class="label">Permit</span><span class="value">2026-104782 · MIAMI-DADE CO.</span></div>
+      <div class="permit-row"><span class="label">Status</span><span class="value hi">IN REVIEW · APPLIED 2026-10-18</span></div>
+      <div class="permit-row"><span class="label">Permit</span><span class="value">2026-104782 · CITY OF RALEIGH</span></div>
       <div class="permit-row"><span class="label">Builder</span><span class="value">12 NEW HOMES IN 180 DAYS</span></div>
-      <div class="permit-row"><span class="label">Group</span><span class="value">PHONE ONLY · CALL LIST</span></div>
+      <div class="permit-row"><span class="label">Signal</span><span class="value hi">NEW TO YOUR RADIUS</span></div>
       <div class="permit-score">
         <div class="label">Timberseek score</div>
-        <div class="value">45<small>/ 50 · high priority</small></div>
-        <div class="parts">Stage 15 · Lumber 15 · Builder 10 · Contact 5 of 10</div>
+        <div class="value">50<small>/ 50 · high priority</small></div>
+        <div class="parts">Stage 15 · Lumber 15 · Builder 10 · Contact 10</div>
       </div>
       <p class="permit-note">Illustrative record. Names and numbers are made up.</p>
     </aside>
@@ -743,31 +834,32 @@
   <section class="band" id="what">
     <div class="section-head">
       <span class="eyebrow">What Timberseek does</span>
-      <h2>Three jobs the data does for your sales team.</h2>
-      <p>No tags, no fluff. The product is a prioritized list of builders starting projects in your territory,
-         ranked by how likely they are to be buying framing material now.</p>
+      <h2>A plain list goes stale by week six. The feed leads with what changed.</h2>
+      <p>You already know most of the builders in your area. The Builder Feed opens every week with the
+         ones you don't, and tells you what your own accounts are up to.</p>
     </div>
 
     <div class="grid-3">
       <div class="pillar">
-        <span class="no">01 — Intelligence</span>
-        <h3>Live permit coverage.</h3>
-        <p>We pull from 48 county and city permit portals across 20 states. New homes, additions,
-           and remodels. Each run reports only the permits you haven't seen before.</p>
+        <span class="no">01 — What changed</span>
+        <h3>New builders, first.</h3>
+        <p>Each issue leads with builders new to your delivery radius or new to the market, builders whose
+           permit count jumped, and new subdivisions: three or more permits by one builder on the same
+           street in a month.</p>
       </div>
       <div class="pillar">
-        <span class="no">02 — Prioritization</span>
-        <h3>Scored on what the permit says.</h3>
-        <p>Four signals, all from the permit record: how far along the job is, how much lumber the work uses
-           (new construction, remodel or outdoor), how many jobs the builder has going, and whether contact
-           details are on file. Scores run from 0 to 50.</p>
+        <span class="no">02 — Account Watch</span>
+        <h3>Know when an account goes quiet.</h3>
+        <p>Send us your current builder accounts at signup. Each week the feed shows who is pulling more
+           permits, who has gone quiet (often a sign they moved to another supplier), and who is building
+           outside their usual area. Your customers never show up as "new."</p>
       </div>
       <div class="pillar">
-        <span class="no">03 — Timing</span>
-        <h3>Follow the job after the permit.</h3>
-        <p>Every source's permit status is mapped to the same stages (submitted, issued, inspection, final),
-           so a builder's jobs read the same in any market, and newly issued jobs rank first.
-           In Florida, Timberseek also matches Notice of Commencement filings.</p>
+        <span class="no">03 — Get in earlier</span>
+        <h3>Reach builders before they pick a supplier.</h3>
+        <p>Where a city publishes it, the feed includes permits still in review, not only issued ones,
+           and every builder is scored from 0 to 50 on job stage, how much lumber the work uses, how many
+           jobs they have going, and whether their contact details are on file.</p>
       </div>
     </div>
   </section>
@@ -789,17 +881,17 @@
       <div class="step">
         <span class="step-no">2</span>
         <h3>Score</h3>
-        <p>Each permit is scored from 0 to 50 on its stage, lumber tier, builder activity and contact details.
-           A project's sub-permits count once, and trade-only permits are set aside. Contact enrichment is
-           available as an option: email and phone from the permit where listed, or a Google business lookup
-           when only a name is on file.</p>
+        <p>Each permit is scored from 0 to 50 on its stage, lumber tier, builder activity and contact details,
+           then filtered to your saved profile: your markets, delivery radius, job types and stages.
+           A project's sub-permits count once, trade-only permits are set aside, and national builders
+           who buy on central contracts drop to the bottom.</p>
       </div>
       <div class="step">
         <span class="step-no">3</span>
         <h3>Deliver</h3>
-        <p>A prioritized lead list in CSV, grouped by how you can reach each contractor
-           (email and phone, phone only, or name only), plus a market report that ranks your markets
-           and the builders in them.</p>
+        <p>A short email Monday morning led by what changed, with the full scored list attached as a CSV,
+           email and phone included. Unlimited users on your account. Timberseek never calls or texts
+           builders; the list is yours to work.</p>
       </div>
     </div>
   </section>
@@ -808,9 +900,9 @@
   <section class="band" id="get">
     <div class="section-head">
       <span class="eyebrow">What you get</span>
-      <h2>More than a list of permits.</h2>
-      <p>The same permit data, worked into the three things a sales team asks for first:
-         where to sell, who to call, and leads that are worth the call.</p>
+      <h2>Contact details straight off the permit.</h2>
+      <p>We start in the markets where the city publishes the builder's email and phone on the permit,
+         so there is no guessing who to contact.</p>
     </div>
 
     <div class="grid-3">
@@ -837,8 +929,60 @@
 
     <div class="proof">
       <span class="tag">From a live report</span>
-      <span>Florida, May 5 to Nov 1, 2026: <b>5,307</b> permits across <b>3</b> markets,
-        <b>1,625</b> of them new construction, every builder ranked.</span>
+      <span>Raleigh, Durham and Cary, May 8 to Nov 4, 2026: <b>4,964</b> permits from <b>1,586</b> active
+        builders, <b>1,031</b> of them with an email on the permit.</span>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="band" id="pricing">
+    <div class="section-head">
+      <span class="eyebrow">Pricing</span>
+      <h2>One price per market. Free for the first 30 days.</h2>
+      <p>The Builder Feed is priced by how many builders are active in your metro area. No tiers,
+         no commission on the business you win, no contract.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price">
+        <div class="size">Under 250 active builders</div>
+        <div class="amt">$250<small>/ month</small></div>
+        <p class="eg">Smaller metros, such as Peoria or Mesa, Arizona.</p>
+      </div>
+      <div class="price">
+        <div class="size">250 to 750 active builders</div>
+        <div class="amt">$375<small>/ month</small></div>
+        <p class="eg">Mid-size metros, such as Naperville and the Chicago west suburbs.</p>
+      </div>
+      <div class="price">
+        <div class="size">Over 750 active builders</div>
+        <div class="amt">$500<small>/ month</small></div>
+        <p class="eg">Large metros, such as Raleigh–Durham–Cary or DeKalb County, Georgia.</p>
+      </div>
+    </div>
+
+    <ul class="price-terms">
+      <li>30 days free, no card</li>
+      <li>Month to month</li>
+      <li>First paid month refundable</li>
+      <li>Unlimited users</li>
+      <li>Cancel in one click</li>
+    </ul>
+
+    <div class="addons">
+      <div class="addon">
+        <span class="no">Add-on</span>
+        <h3>Builder Quote Desk <span class="p">$199 / mo</span></h3>
+        <p>Builders with a new permit who ask for a lumber or truss quote are sent to you, with the permit
+           attached. One supplier per trade per market, so you aren't bidding against another subscriber.
+           Free while it is piloted in a market.</p>
+      </div>
+      <div class="addon">
+        <span class="no">For site services</span>
+        <h3>Site Services List <span class="p">$99 / mo</span></h3>
+        <p>For roll-off dumpster, portable toilet and temporary fence companies: a weekly list of permits
+           newly issued in your area. No scoring, no setup.</p>
+      </div>
     </div>
   </section>
 
@@ -846,36 +990,36 @@
   <section class="band" id="who">
     <div class="section-head">
       <span class="eyebrow">Who it's for</span>
-      <h2>Built for the people who sell lumber and millwork for a living.</h2>
+      <h2>Built for suppliers who sell to builders inside a delivery radius.</h2>
     </div>
 
     <div class="audience-grid">
       <div>
         <span class="idx">01</span>
         <span>
-          <span class="name">Lumber yards</span>
-          <span class="sub">Single-location and multi-yard operators selling to residential and light-commercial GCs.</span>
+          <span class="name">Truss &amp; wall-panel plants</span>
+          <span class="sub">Independent plants delivering new-home packages in a 50 to 100 mile radius.</span>
         </span>
       </div>
       <div>
         <span class="idx">02</span>
         <span>
-          <span class="name">Millwork &amp; truss</span>
-          <span class="sub">Component manufacturers who need to engage framers before the shop drawings get awarded.</span>
+          <span class="name">Lumber yards &amp; dealers</span>
+          <span class="sub">Independent yards and building-material dealers selling to builders inside a delivery radius.</span>
         </span>
       </div>
       <div>
         <span class="idx">03</span>
         <span>
-          <span class="name">Building-material distributors</span>
-          <span class="sub">Fasteners, panels, siding, roofing — anyone whose material spec sits inside a framing package.</span>
+          <span class="name">Windows, doors &amp; millwork</span>
+          <span class="sub">Window, door, cabinet, millwork and siding suppliers, with the feed filtered to additions and remodels.</span>
         </span>
       </div>
       <div>
         <span class="idx">04</span>
         <span>
-          <span class="name">Independent reps</span>
-          <span class="sub">Account managers covering a territory who want their own data pipeline, not their yard's.</span>
+          <span class="name">Site services</span>
+          <span class="sub">Roll-off dumpsters, portable toilets and temporary fence. Every permit needs them.</span>
         </span>
       </div>
     </div>
@@ -901,12 +1045,12 @@
           <div class="label">States<br>covered</div>
         </div>
         <div class="data-stat">
-          <div class="figure">4</div>
-          <div class="label">Permit signals<br>in every score</div>
+          <div class="figure">6,160</div>
+          <div class="label">Active builders in<br>contact-ready markets</div>
         </div>
         <div class="data-stat">
-          <div class="figure">4</div>
-          <div class="label">Open-data portal<br>platforms supported</div>
+          <div class="figure">2,413</div>
+          <div class="label">Builders with an email<br>on the permit</div>
         </div>
       </div>
     </div>
@@ -915,17 +1059,17 @@
   <!-- CTA / SIGNUP -->
   <section class="cta-band" id="request">
     <div>
-      <span class="eyebrow">Request a pilot</span>
-      <h2>Try it for 90 days. No cost unless a builder buys.</h2>
-      <p>We find the builders pulling permits in your delivery area and introduce you to the ones you
-         don't supply yet. You pay commission only on paid invoices from those new accounts.</p>
+      <span class="eyebrow">Start a free trial</span>
+      <h2>Try the Builder Feed free for 30 days.</h2>
+      <p>No card to start and no commission, ever. If the feed is earning its keep, add a card to keep it
+         running past day 30. If your first paid month doesn't, we refund it.</p>
       <ol class="offer-steps">
-        <li><span class="n">1</span><span>Tell us your markets and the jobs you supply. We send a builder snapshot for your area.</span></li>
-        <li><span class="n">2</span><span>Tick the builders you already supply. Your current customers stay yours.</span></li>
-        <li><span class="n">3</span><span>We start with the rest. Commission applies only when a new account's invoice is paid.</span></li>
+        <li><span class="n">1</span><span>Tell us your yard's address, delivery radius and the jobs you supply. We send a free snapshot of the builders active in your area.</span></li>
+        <li><span class="n">2</span><span>Send your current builder accounts. They stay off the "new" list and go into Account Watch.</span></li>
+        <li><span class="n">3</span><span>Your feed arrives every Monday. On day 20 you get a recap of what it delivered and a link to keep it going.</span></li>
       </ol>
       <p style="margin-top:20px;font-size:15px;">
-        We reply within three business days.</p>
+        Now opening Raleigh–Durham–Cary, then Atlanta. We reply within three business days.</p>
       <p style="margin-top:8px;font-size:15px;">
         Prefer email? Write <a href="mailto:hello@timberseek.co">hello@timberseek.co</a>.
       </p>
@@ -946,27 +1090,27 @@
           <input type="text" id="f-company" name="company" autocomplete="organization">
         </div>
         <div>
-          <label class="label" for="f-markets">Markets you sell into</label>
-          <input type="text" id="f-markets" name="markets" placeholder="e.g. Miami-Dade, Broward" autocomplete="off">
+          <label class="label" for="f-markets">Markets you deliver to</label>
+          <input type="text" id="f-markets" name="markets" placeholder="e.g. Raleigh, Durham, Cary" autocomplete="off">
         </div>
         <div>
           <label class="label" for="f-type">You are a…</label>
           <select id="f-type" name="type">
-            <option>Lumber yard</option>
-            <option>Millwork or truss shop</option>
-            <option>Building-material distributor</option>
-            <option>Independent sales rep</option>
+            <option>Truss or wall-panel plant</option>
+            <option>Lumber yard or building-material dealer</option>
+            <option>Window, door, cabinet or millwork supplier</option>
+            <option>Site services (dumpsters, toilets, fence)</option>
             <option>Something else</option>
           </select>
         </div>
         <div class="error" id="f-error" hidden>Add your name and a valid work email.</div>
         <button type="submit" class="btn btn-primary">
-          Request a pilot
+          Start my free trial
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
         </button>
         <div class="fine">
           This opens your email app with your request filled in, addressed to hello@timberseek.co.
-          We use your details only to talk with you about a pilot. No marketing lists, no resale of your email.
+          We use your details only to set up your trial. No marketing lists, no resale of your email.
         </div>
       </div>
       <div class="success" role="status">
@@ -986,14 +1130,14 @@
     </div>
     <div class="legal">
       <a href="mailto:hello@timberseek.co">hello@timberseek.co</a><br>
-      <a href="#request">Request a pilot</a> · <a href="#how">How it works</a>
+      <a href="#request">Start a free trial</a> · <a href="#pricing">Pricing</a> · <a href="#how">How it works</a>
     </div>
   </footer>
 
 </div>
 
 <script>
-  // Pilot request form. There is no form backend yet, so the request is
+  // Free-trial request form. There is no form backend yet, so the request is
   // handed to the visitor's email app, addressed to hello@timberseek.co,
   // and the address is shown for copying in case no email app opens.
   // To collect requests on the site instead, send FormData(form) to a form
@@ -1014,7 +1158,7 @@
       }
       err.hidden = true;
       var company = v('#f-company'), markets = v('#f-markets'), type = v('#f-type');
-      var subject = 'Pilot request' + (company ? ': ' + company : '');
+      var subject = 'Free trial request' + (company ? ': ' + company : '');
       var body = [
         'Name: ' + name,
         'Email: ' + email,
