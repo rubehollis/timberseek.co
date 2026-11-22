@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="How Timberseek collects, uses and protects information.">
+<title>Privacy Policy · Timberseek</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1F4D3A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+  :root {
+    --bg:#F6F3EC; --paper:#FFFFFF; --fg:#1C1F1B; --body-fg:#3A3F38; --muted:#555A52;
+    --rule:#C9C4B8; --line:#1C1F1B; --accent:#1F4D3A; --mark:#163828; --tag-bg:rgba(31,77,58,0.07);
+    --display:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+    --body:"Source Sans 3",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"IBM Plex Mono","SF Mono","Courier New",monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#121513; --paper:#1A1E1B; --fg:#ECE8DF; --body-fg:#CFCAC0; --muted:#A39E92;
+      --rule:#343A35; --line:#6B716A; --accent:#8CC3A5; --mark:#B5DBC6; --tag-bg:rgba(140,195,165,0.10);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--fg); font-family: var(--body);
+    font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .page { max-width: 1120px; margin: 0 auto; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--mark); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  nav.topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding-block: 20px 14px; border-bottom: 2px solid var(--line);
+    font-family: var(--mono); font-size: 13px;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg);
+    font-family: var(--display); font-weight: 700; font-size: 26px; letter-spacing: 0.01em;
+  }
+  .brand img { width: 26px; height: 26px; }
+  nav.topbar .links a { color: var(--body-fg); margin-left: 18px; text-decoration: none; }
+  nav.topbar .links a:first-child { margin-left: 0; }
+  nav.topbar .links a[aria-current] { color: var(--accent); text-decoration: underline; }
+
+  main { max-width: 760px; padding-block: 48px 64px; }
+  .eyebrow {
+    font-family: var(--display); font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); font-size: 15px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(40px, 6vw, 56px);
+    line-height: 1.02; margin: 8px 0 12px; letter-spacing: 0.005em;
+  }
+  .effective { font-family: var(--mono); font-size: 13px; color: var(--muted); margin: 0 0 28px; }
+  .summary {
+    background: var(--tag-bg); border-left: 3px solid var(--accent);
+    padding: 16px 20px; margin: 0 0 36px; color: var(--body-fg);
+  }
+  .summary p { margin: 0 0 6px; font-weight: 600; color: var(--fg); }
+  .summary ul { margin: 0; padding-left: 20px; }
+  h2 {
+    font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.15;
+    margin: 36px 0 10px; padding-top: 16px; border-top: 1px solid var(--rule);
+  }
+  main p, main li { color: var(--body-fg); }
+  main ul, main ol { padding-left: 22px; }
+  main li { margin-bottom: 6px; }
+  strong { color: var(--fg); }
+
+  footer.foot {
+    border-top: 2px solid var(--line); padding-block: 24px 40px;
+    display: grid; grid-template-columns: 1fr auto; gap: 16px;
+    font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.7;
+  }
+  footer.foot .legal { text-align: right; }
+  footer.foot a { color: var(--body-fg); text-decoration-color: var(--rule); }
+  footer.foot a:hover { color: var(--accent); }
+  @media (max-width: 640px) {
+    footer.foot { grid-template-columns: 1fr; }
+    footer.foot .legal { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="26" height="26"> Timberseek</a>
+    <span class="links">
+      <a href="/terms">Terms</a>
+      <a href="/privacy" aria-current="page">Privacy</a>
+      <a href="/refunds">Refunds</a>
+    </span>
+  </nav>
+  <main>
+    <span class="eyebrow">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="effective">Effective November 22, 2026 · Timberseek LLC</p>
+
+    <div class="summary">
+      <p>The short version</p>
+      <ul>
+        <li>We collect only what we need to run your trial and subscription.</li>
+        <li>We never sell your information or add you to marketing lists.</li>
+        <li>Card payments are handled by Stripe. We never see or store your full card number.</li>
+        <li>Builder contact details in the feed come from public permit records. Builders can ask us to remove theirs.</li>
+      </ul>
+    </div>
+
+    <h2>1. Who this policy covers</h2>
+    <p>This Privacy Policy explains how Timberseek LLC ("Timberseek," "we," "us") collects and uses information through
+       timberseek.co and the Timberseek service (the "Service"). It covers two groups of people: our customers and website
+       visitors, and the builders and contractors whose details appear in public permit records.</p>
+
+    <h2>2. Information we collect from customers</h2>
+    <ul>
+      <li><strong>What you send us when you sign up:</strong> your name, work email, company, phone number, the markets you
+          deliver to, your business type, your yard or plant address, delivery radius, and the jobs you supply.</li>
+      <li><strong>Your builder accounts:</strong> the list of current builder customers you send us for Account Watch.</li>
+      <li><strong>Billing information:</strong> when you subscribe, Stripe collects your payment details. We receive limited
+          information from Stripe, such as your billing name, the last four digits of your card, and payment status.</li>
+      <li><strong>Emails and messages:</strong> anything you write to us, and records of our replies.</li>
+    </ul>
+
+    <h2>3. How we use customer information</h2>
+    <ul>
+      <li>To set up your trial and build your feed for your market and delivery radius.</li>
+      <li>To keep your own builder accounts out of your "new builders" list and track them in Account Watch.</li>
+      <li>To bill you, send receipts, and handle refunds.</li>
+      <li>To answer your questions and send service messages, such as your Monday feed, your day-20 trial recap, and
+          notices about billing or changes to the Service.</li>
+      <li>To improve the Service, for example by learning which reports customers find useful.</li>
+      <li>To meet legal obligations and protect against fraud.</li>
+    </ul>
+    <p>We don't sell your information, rent it, or put you on marketing lists. Your builder account list is never shared
+       with other customers.</p>
+
+    <h2>4. Builder and contractor information from public records</h2>
+    <p>The feed includes information that cities and counties publish in construction permit records, such as a builder's
+       or contractor's company name, license number, job address, and the email and phone number listed on the permit. We
+       collect this from official public data portals and share it with subscribing building-material suppliers so they can
+       offer their products.</p>
+    <p>If you're a builder or contractor and want your contact details removed from future Timberseek feeds, email
+       <a href="mailto:hello@timberseek.co">hello@timberseek.co</a> with your name or company and the email or phone to
+       remove. We'll remove them from future feeds within 10 business days. This doesn't change the public record itself,
+       which is kept by the permitting office.</p>
+
+    <h2>5. Who we share information with</h2>
+    <p>We share information only with service providers that help us run the business, and only what they need:</p>
+    <ul>
+      <li><strong>Stripe</strong>, for payment processing.</li>
+      <li><strong>Microsoft 365</strong>, for email.</li>
+      <li><strong>GitHub Pages</strong>, which hosts this website.</li>
+      <li><strong>Google Fonts</strong>, which serves the fonts on this website and receives your browser's IP address when
+          the page loads.</li>
+      <li>Cloud hosting and data tools we use to build and deliver the feed.</li>
+    </ul>
+    <p>We may also share information if the law requires it, to protect our rights or others' safety, or as part of a sale
+       or merger of the business, in which case this policy would continue to apply.</p>
+
+    <h2>6. Cookies and tracking</h2>
+    <p>This website doesn't use advertising cookies or analytics trackers. If we add analytics in the future, we'll update
+       this policy first.</p>
+
+    <h2>7. How long we keep information</h2>
+    <p>We keep customer information while your account is active. After you cancel, we delete your setup details and builder
+       account list within 90 days, unless you ask us to keep them so you can restart easily. We keep billing records as long
+       as tax and accounting laws require, generally seven years.</p>
+
+    <h2>8. Security</h2>
+    <p>We use reasonable safeguards to protect information, including encrypted connections, access controls, and
+       limiting access to the people who need it. No system is perfectly secure, but if we learn of a breach affecting your
+       information, we'll notify you as the law requires.</p>
+
+    <h2>9. Your choices</h2>
+    <p>You can ask us to show you, correct, or delete the information we hold about you by emailing
+       <a href="mailto:hello@timberseek.co">hello@timberseek.co</a>. We'll respond within 30 days. Service emails, such as
+       your feed and billing notices, stop when you cancel.</p>
+
+    <h2>10. Children</h2>
+    <p>The Service is for businesses and isn't directed to children. We don't knowingly collect information from anyone
+       under 18.</p>
+
+    <h2>11. Changes to this policy</h2>
+    <p>If we make significant changes, we'll post the new policy here and email current customers before it takes effect.</p>
+
+    <h2>12. Contact</h2>
+<p>Timberseek LLC<br>
+7901 4th St N, Ste 300<br>
+St. Petersburg, FL 33702<br>
+<a href="mailto:hello@timberseek.co">hello@timberseek.co</a> · <a href="tel:+16785498320">678.549.8320</a></p>
+  </main>
+  <footer class="foot">
+    <div>
+      © 2026 Timberseek LLC · All rights reserved.<br>
+      7901 4th St N, Ste 300, St. Petersburg, FL 33702
+    </div>
+    <div class="legal">
+      <a href="mailto:hello@timberseek.co">hello@timberseek.co</a> · <a href="tel:+16785498320">678.549.8320</a><br>
+      <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a> · <a href="/refunds">Refunds</a> · <a href="/">Home</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
