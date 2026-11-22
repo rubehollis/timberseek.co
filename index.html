@@ -578,11 +578,28 @@
     color: var(--muted);
     margin-left: 4px;
   }
+  .price .amt small { white-space: nowrap; }
+  @media (min-width: 821px) and (max-width: 1100px) {
+    .price-grid:not(.two) .price { padding: 24px 20px; }
+    .price-grid:not(.two) .price .amt { font-size: 42px; }
+  }
   .price .eg {
     margin: 14px 0 0;
     font-size: 15px;
     color: var(--body-fg);
   }
+  .price .price-link {
+    display: inline-block;
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .price .price-link:hover { text-decoration: underline; }
   .price-terms {
     list-style: none; padding: 0; margin: 28px 0 0;
     display: flex; flex-wrap: wrap; gap: 10px 28px;
@@ -925,11 +942,11 @@
     <div class="section-head">
       <span class="eyebrow">Pricing</span>
       <h2>One price per market. Free for the first 30 days.</h2>
-      <p>One flat monthly price for each metro market you cover. No tiers, no commission on the
-         business you win, no contract.</p>
+      <p>One flat monthly price for each metro market you cover, plus an optional Quote Desk for reps
+         and sales teams. No commission on the business you win, no contract.</p>
     </div>
 
-    <div class="price-grid two">
+    <div class="price-grid">
       <div class="price">
         <div class="size">Builder Feed · per metro market</div>
         <div class="amt">$499<small>/ month</small></div>
@@ -938,11 +955,20 @@
            Raleigh–Durham–Cary and DeKalb County, Georgia.</p>
       </div>
       <div class="price">
-        <div class="size">Add-on · Builder Quote Desk</div>
+        <div class="size">Quote Desk · for reps</div>
         <div class="amt">$749<small>/ month</small></div>
-        <p class="eg">Builders with a new permit who ask for a lumber or truss quote are sent to you, with the
-           permit attached. One supplier per trade per market, so you aren't bidding against another
-           subscriber.</p>
+        <p class="eg">For independent, self-employed reps. Builders with a new permit who ask for a lumber or
+           truss quote are introduced to you by name, with the permit attached. Up to 10 quote
+           requests a month. Builder Feed optional.</p>
+        <a class="price-link" href="mailto:hello@timberseek.co?subject=Quote%20Desk%20for%20reps">Add the Quote Desk →</a>
+      </div>
+      <div class="price">
+        <div class="size">Quote Desk · for teams</div>
+        <div class="amt"><small style="margin:0 4px 0 0;">from</small>$1,500<small>/ month</small></div>
+        <p class="eg">For distributors, yards and truss or millwork plants. An exclusive territory for your
+           trade in the market, quote requests sent to any of your reps, and a monthly report on
+           requests sent and jobs won. Includes the Builder Feed.</p>
+        <a class="price-link" href="mailto:hello@timberseek.co?subject=Quote%20Desk%20for%20teams%20pilot">Request a pilot →</a>
       </div>
     </div>
 
