@@ -635,8 +635,9 @@
     font-weight: 700; font-size: 15px;
     display: flex; align-items: center; justify-content: center;
   }
-  form.signup {
+  .signup {
     display: grid;
+    align-content: start;
     gap: 14px;
     background: var(--paper);
     border: 1.5px solid var(--line);
@@ -678,6 +679,21 @@
     width: 100%;
     justify-content: center;
   }
+  .signup .checkout-summary .size {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+  }
+  .signup .checkout-summary .amt {
+    font-family: var(--display); font-weight: 700; font-size: 56px; line-height: 1;
+    color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+  .signup .checkout-summary .amt small {
+    font-family: var(--body); font-size: 15px; font-weight: 600; color: var(--muted); margin-left: 6px;
+  }
+  .signup .checkout-summary .then { margin: 12px 0 0; font-size: 15px; color: var(--body-fg); }
+  .signup .btn { width: 100%; justify-content: center; margin-top: 6px; }
+  .signup .fine a { color: var(--body-fg); }
+  .signup .fine,
   form.signup .fine {
     font-family: var(--body);
     font-size: 13px;
@@ -1018,62 +1034,33 @@
       <p>No card to start and no commission, ever. If the feed is earning its keep, add a card to keep it
          running past day 30. If your first paid month doesn't, we refund it.</p>
       <ol class="offer-steps">
-        <li><span class="n">1</span><span>Tell us your yard's address, delivery radius and the jobs you supply. We send a free snapshot of the builders active in your area.</span></li>
+        <li><span class="n">1</span><span>Start your trial at Stripe's secure checkout. No card. Then reply to our welcome email with your yard's address, delivery radius and the jobs you supply.</span></li>
         <li><span class="n">2</span><span>Send your current builder accounts. They stay off the "new" list and go into Account Watch.</span></li>
         <li><span class="n">3</span><span>Your feed arrives every Monday. On day 20 you get a recap of what it delivered and a link to keep it going.</span></li>
       </ol>
       <p style="margin-top:20px;font-size:15px;">
-        Now opening Raleigh–Durham–Cary, then Atlanta. We reply within three business days.</p>
+        Now opening Raleigh–Durham–Cary, then Atlanta. We email you within one business day of signup.</p>
       <p style="margin-top:8px;font-size:15px;">
         Prefer email? Write <a href="mailto:hello@timberseek.co">hello@timberseek.co</a>.
       </p>
     </div>
 
-    <form class="signup" id="signupForm" novalidate>
-      <div class="fields">
-        <div>
-          <label class="label" for="f-name">Your name</label>
-          <input type="text" id="f-name" name="name" required autocomplete="name">
-        </div>
-        <div>
-          <label class="label" for="f-email">Work email</label>
-          <input type="email" id="f-email" name="email" required autocomplete="email">
-        </div>
-        <div>
-          <label class="label" for="f-company">Company</label>
-          <input type="text" id="f-company" name="company" autocomplete="organization">
-        </div>
-        <div>
-          <label class="label" for="f-markets">Markets you deliver to</label>
-          <input type="text" id="f-markets" name="markets" placeholder="e.g. Raleigh, Durham, Cary" autocomplete="off">
-        </div>
-        <div>
-          <label class="label" for="f-type">You are a…</label>
-          <select id="f-type" name="type">
-            <option>Truss or wall-panel plant</option>
-            <option>Lumber yard or building-material dealer</option>
-            <option>Window, door, cabinet or millwork supplier</option>
-            <option>Building-material distributor</option>
-            <option>Something else</option>
-          </select>
-        </div>
-        <div class="error" id="f-error" hidden>Add your name and a valid work email.</div>
-        <button type="submit" class="btn btn-primary">
-          Start my free trial
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
-        </button>
-        <div class="fine">
-          This opens your email app with your request filled in, addressed to hello@timberseek.co.
-          We use your details only to set up your trial. No marketing lists, no resale of your email.
-        </div>
+    <div class="signup">
+      <div class="checkout-summary">
+        <div class="size">Builder Feed · one metro market</div>
+        <div class="amt">$0<small>for 30 days</small></div>
+        <p class="then">Then $499 a month if you keep it. Month to month, cancel in one click.</p>
       </div>
-      <div class="success" role="status">
-        <p><strong>Your email app should open with your request.</strong> Send it and we'll reply within three business days.</p>
-        <p>If nothing opened, email us directly:
-          <span class="addr"><span id="f-addr">hello@timberseek.co</span>
-            <button type="button" class="copy" id="f-copy">Copy</button></span></p>
+      <a href="https://buy.stripe.com/eVq7sM8Rnbwx4cH1zD8ww00" class="btn btn-primary" id="trialCheckout">
+        Start my free trial
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+      </a>
+      <div class="fine">
+        Secure signup through Stripe. No card needed to start. You give us your name, company, the market
+        you deliver to and what you sell. If you don't add a card by day 30, the trial simply ends.
+        Already subscribed? <a href="https://billing.stripe.com/p/login/eVq7sM8Rnbwx4cH1zD8ww00">Manage billing</a>.
       </div>
-    </form>
+    </div>
   </section>
 
   <footer class="foot">
@@ -1084,61 +1071,12 @@
     </div>
     <div class="legal">
       <a href="mailto:hello@timberseek.co">hello@timberseek.co</a><br>
-      <a href="#request">Start a free trial</a> · <a href="#pricing">Pricing</a> · <a href="#how">How it works</a>
+      <a href="#request">Start a free trial</a> · <a href="#pricing">Pricing</a> · <a href="#how">How it works</a><br>
+      <a href="https://billing.stripe.com/p/login/eVq7sM8Rnbwx4cH1zD8ww00">Manage billing</a>
     </div>
   </footer>
 
 </div>
-
-<script>
-  // Free-trial request form. There is no form backend yet, so the request is
-  // handed to the visitor's email app, addressed to hello@timberseek.co,
-  // and the address is shown for copying in case no email app opens.
-  // To collect requests on the site instead, send FormData(form) to a form
-  // service (Formspree, Basin, your own endpoint) in place of the mailto step.
-  (function () {
-    var form = document.getElementById('signupForm');
-    if (!form) return;
-    var TO = 'hello@timberseek.co';
-    var err = document.getElementById('f-error');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var v = function (id) { return form.querySelector(id).value.trim(); };
-      var name = v('#f-name'), email = v('#f-email');
-      if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        err.hidden = false;
-        form.querySelector(name ? '#f-email' : '#f-name').focus();
-        return;
-      }
-      err.hidden = true;
-      var company = v('#f-company'), markets = v('#f-markets'), type = v('#f-type');
-      var subject = 'Free trial request' + (company ? ': ' + company : '');
-      var body = [
-        'Name: ' + name,
-        'Email: ' + email,
-        'Company: ' + (company || '-'),
-        'Markets: ' + (markets || '-'),
-        'Business type: ' + type
-      ].join('\n');
-      form.classList.add('sent');
-      var success = form.querySelector('.success');
-      if (success) success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      window.location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) +
-        '&body=' + encodeURIComponent(body);
-    });
-    var copy = document.getElementById('f-copy');
-    if (copy) copy.addEventListener('click', function () {
-      var done = function () { copy.textContent = 'Copied'; };
-      try {
-        navigator.clipboard.writeText(TO).then(done, function () { selectAddr(); });
-      } catch (e) { selectAddr(); }
-    });
-    function selectAddr() {
-      var r = document.createRange(); r.selectNodeContents(document.getElementById('f-addr'));
-      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-    }
-  })();
-</script>
 
 </body>
 </html>
