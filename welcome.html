@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Your trial has started · Timberseek</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1F4D3A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+  :root {
+    --bg: #F6F3EC; --paper: #FFFFFF; --fg: #1C1F1B; --body-fg: #3A3F38; --muted: #555A52;
+    --rule: #C9C4B8; --line: #1C1F1B; --accent: #1F4D3A; --forest: #1F4D3A; --forest-hover: #163828;
+    --mark: #163828; --panel-fg: #F6F3EC;
+    --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+    --body: "Source Sans 3", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", "SF Mono", "Courier New", monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121513; --paper: #1A1E1B; --fg: #ECE8DF; --body-fg: #CFCAC0; --muted: #A39E92;
+      --rule: #343A35; --line: #6B716A; --accent: #8CC3A5; --forest: #2F6B51; --forest-hover: #3A7D5F;
+      --mark: #B5DBC6; color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .page { max-width: 760px; margin: 0 auto; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:hover { color: var(--mark); }
+  nav { padding-block: 22px; border-bottom: 2px solid var(--line); }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg);
+    font-family: var(--display); font-weight: 700; font-size: 30px; letter-spacing: 0.01em;
+  }
+  main { padding-block: 56px 72px; }
+  .eyebrow {
+    font-family: var(--display); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); font-size: 16px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(40px, 6vw, 60px); line-height: 1;
+    margin: 12px 0 18px; text-wrap: balance;
+  }
+  p { color: var(--body-fg); margin: 0 0 14px; }
+  ol { list-style: none; padding: 0; margin: 28px 0; display: grid; gap: 16px; }
+  li { display: flex; gap: 14px; align-items: flex-start; }
+  .n {
+    flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--forest); color: var(--panel-fg);
+    font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center;
+  }
+  .card { background: var(--paper); border: 1.5px solid var(--line); border-radius: 6px; padding: 24px; margin-top: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 22px;
+    background: var(--forest); color: var(--panel-fg); border: 1.5px solid var(--forest); border-radius: 4px;
+    font-weight: 700; font-size: 16px; text-decoration: none;
+  }
+  .btn:hover { background: var(--forest-hover); color: var(--panel-fg); }
+  .fine { font-size: 14px; color: var(--muted); margin-top: 18px; }
+  footer { border-top: 1px solid var(--rule); padding-block: 28px; font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav>
+    <a href="/" class="brand"><img src="/logo.svg" alt="" width="30" height="30"> Timberseek</a>
+  </nav>
+
+  <main>
+    <span class="eyebrow">You're in</span>
+    <h1>Your 30-day Builder Feed trial has started.</h1>
+    <p>Nothing has been charged. Stripe has sent a confirmation to the email you used at checkout.</p>
+
+    <ol>
+      <li><span class="n">1</span><span><strong>Send us your job profile.</strong> Reply to the welcome email
+        (or write to <a href="mailto:hello@timberseek.co?subject=Builder%20Feed%20trial%20profile">hello@timberseek.co</a>)
+        with your yard's address, delivery radius and the jobs you supply.</span></li>
+      <li><span class="n">2</span><span><strong>Send your current builder accounts.</strong> They stay off the
+        "new" list and go into Account Watch.</span></li>
+      <li><span class="n">3</span><span><strong>Watch for Monday.</strong> Your first feed arrives the Monday after
+        your profile is set up. On day 20 you get a recap of what it delivered.</span></li>
+    </ol>
+
+    <div class="card">
+      <p><strong>Keeping it after day 30?</strong> Add a card any time in the billing portal. The feed then
+        continues at $499 a month, and your first paid month is refundable if it isn't earning its keep.
+        If you don't add a card, the trial simply ends.</p>
+      <a class="btn" href="https://billing.stripe.com/p/login/eVq7sM8Rnbwx4cH1zD8ww00">Open billing portal</a>
+      <p class="fine">The portal signs you in with a one-time code sent to your checkout email.</p>
+    </div>
+  </main>
+
+  <footer>© 2026 Timberseek LLC · <a href="mailto:hello@timberseek.co">hello@timberseek.co</a> · <a href="/">timberseek.co</a></footer>
+</div>
+</body>
+</html>
