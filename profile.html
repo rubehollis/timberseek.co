@@ -117,6 +117,9 @@
   .toggle { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 15px; color: var(--body-fg); }
   .toggle input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--forest); flex: none; }
   .toggle.off { opacity: .5; }
+  .mismatch { margin-top: 18px; border: 1.5px solid var(--copper); border-radius: 4px; padding: 14px 16px; background: var(--bg); }
+  .mismatch p { margin: 0; color: var(--body-fg); font-size: 15px; }
+  .mismatch.invalid { border-color: var(--error); }
   .opt-tag { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
     color: var(--muted); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px; margin-left: 4px; }
 
@@ -228,6 +231,12 @@
             <div><label class="label" for="zip" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:14px;color:var(--muted);">ZIP</label>
               <input type="text" id="zip" name="zip" required inputmode="numeric" autocomplete="postal-code" maxlength="10"></div>
           </div>
+        </div>
+
+        <div class="mismatch" id="mismatch" hidden>
+          <p><strong>Check your market.</strong> <span id="mismatchText"></span></p>
+          <label class="toggle"><input type="checkbox" id="mismatchOk">
+            <span>That's right: my yard is outside this market, and I deliver into it.</span></label>
         </div>
 
         <div class="q">
@@ -446,6 +455,25 @@
     return $(id).value.split(/\n+/).map(function (s) { return s.trim(); }).filter(Boolean);
   }
 
+  var MARKET_STATE = { raleigh_durham_cary_nc: 'NC', dekalb_county_ga: 'GA', miami_dade_county_fl: 'FL', city_of_miami_fl: 'FL', orlando_fl: 'FL' };
+  function selectedText(id) { var el = $(id); return el.value ? el.options[el.selectedIndex].text : ''; }
+  function checkMismatch() {
+    var want = MARKET_STATE[$('market').value], st = $('state').value;
+    var show = !!(want && st && st !== want);
+    $('mismatch').hidden = !show;
+    if (show) {
+      $('mismatchText').textContent = 'You picked ' + selectedText('market') + ', but your yard is in ' +
+        (st === 'other' ? 'another state' : st) + '. Your feed searches the market you pick, so make sure it\'s the one you deliver into.';
+    } else { $('mismatchOk').checked = false; }
+    return show;
+  }
+  ['market', 'state'].forEach(function (id) { $(id).addEventListener('change', checkMismatch); });
+  function labels(name) {
+    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (i) {
+      return i.nextElementSibling.textContent.trim();
+    });
+  }
+
   function validate() {
     var problems = [];
     form.querySelectorAll('.invalid').forEach(function (el) { el.classList.remove('invalid'); });
@@ -461,6 +489,7 @@
     form.querySelectorAll('[data-required]').forEach(function (group) {
       if (!values(group.getAttribute('data-required')).length) { group.classList.add('invalid'); problems.push(group); }
     });
+    if (checkMismatch() && !$('mismatchOk').checked) { $('mismatch').classList.add('invalid'); problems.push($('mismatch')); }
     return problems;
   }
 
@@ -519,12 +548,37 @@
       return;
     }
 
-    var data = new FormData(form);
-    data.set('project_types', profile.project_types.join(', '));
-    data.set('products', profile.products.join(', '));
-    data.set('stages', profile.stages.join(', '));
-    data.set('_subject', 'Job profile: ' + profile.company + ' (' + profile.market + ')');
-    data.set('_replyto', profile.contact.email);
+    // Readable fields for the email, in form order; empty answers are left out.
+    // profile_json keeps the exact codes for the feed config.
+    var marketLabel = $('market').value === 'other' ? $('other_market').value.trim() : selectedText('market');
+    var y = profile.yard;
+    var rows = [
+      ['Company', profile.company],
+      ['Contact', profile.contact.name + ' <' + profile.contact.email + '>' + (profile.contact.phone ? ', ' + profile.contact.phone : '')],
+      ['Business type', labels('business_type').join('')],
+      ['Market', marketLabel],
+      ['Yard address', y.street + ', ' + y.city + ', ' + (y.state === 'other' ? '' : y.state + ' ') + y.zip],
+      ['Yard outside market', !$('mismatch').hidden ? 'Yes, confirmed by customer' : ''],
+      ['Delivery radius', profile.radius_miles + ' miles'],
+      ['Other yards', profile.other_yards.join('\n')],
+      ['Project types', labels('project_types').join(', ')],
+      ['Products', labels('products').join(', ')],
+      ['Smallest job', selectedText('min_value')],
+      ['Builder focus', selectedText('builder_size')],
+      ['Job stages', labels('stages').join(', ')],
+      ['Existing accounts', profile.existing_accounts.join('\n')],
+      ['Account Watch', profile.existing_accounts.length ? (profile.account_watch ? 'On' : 'Off') : ''],
+      ['Feed recipients', profile.recipients.join(', ')],
+      ['Format', labels('format').join('')],
+      ['Notes', profile.notes],
+      ['Stripe checkout', profile.stripe_checkout_session || '']
+    ];
+    var data = new FormData();
+    rows.forEach(function (r) { if (r[1]) data.append(r[0], r[1]); });
+    data.append('profile_json', JSON.stringify(profile));
+    data.append('_subject', 'Job profile: ' + profile.company + ' (' + marketLabel + ')');
+    data.append('_replyto', profile.contact.email);
+    data.append('_gotcha', form.querySelector('input[name="_gotcha"]').value);
 
     var btn = $('submitBtn'); btn.disabled = true; btn.firstChild.textContent = 'Saving… ';
     fetch('https://formspree.io/f/' + FORMSPREE_ID, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
