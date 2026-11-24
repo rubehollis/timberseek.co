@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Terms of Service for the Timberseek Builder Feed.">
+<title>Terms of Service · Timberseek</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1F4D3A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+  :root {
+    --bg:#F6F3EC; --paper:#FFFFFF; --fg:#1C1F1B; --body-fg:#3A3F38; --muted:#555A52;
+    --rule:#C9C4B8; --line:#1C1F1B; --accent:#1F4D3A; --mark:#163828; --tag-bg:rgba(31,77,58,0.07);
+    --display:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+    --body:"Source Sans 3",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"IBM Plex Mono","SF Mono","Courier New",monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#121513; --paper:#1A1E1B; --fg:#ECE8DF; --body-fg:#CFCAC0; --muted:#A39E92;
+      --rule:#343A35; --line:#6B716A; --accent:#8CC3A5; --mark:#B5DBC6; --tag-bg:rgba(140,195,165,0.10);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--fg); font-family: var(--body);
+    font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .page { max-width: 1120px; margin: 0 auto; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--mark); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  nav.topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding-block: 20px 14px; border-bottom: 2px solid var(--line);
+    font-family: var(--mono); font-size: 13px;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg);
+    font-family: var(--display); font-weight: 700; font-size: 26px; letter-spacing: 0.01em;
+  }
+  .brand img { width: 26px; height: 26px; }
+  nav.topbar .links a { color: var(--body-fg); margin-left: 18px; text-decoration: none; }
+  nav.topbar .links a:first-child { margin-left: 0; }
+  nav.topbar .links a[aria-current] { color: var(--accent); text-decoration: underline; }
+
+  main { max-width: 760px; padding-block: 48px 64px; }
+  .eyebrow {
+    font-family: var(--display); font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); font-size: 15px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(40px, 6vw, 56px);
+    line-height: 1.02; margin: 8px 0 12px; letter-spacing: 0.005em;
+  }
+  .effective { font-family: var(--mono); font-size: 13px; color: var(--muted); margin: 0 0 28px; }
+  .summary {
+    background: var(--tag-bg); border-left: 3px solid var(--accent);
+    padding: 16px 20px; margin: 0 0 36px; color: var(--body-fg);
+  }
+  .summary p { margin: 0 0 6px; font-weight: 600; color: var(--fg); }
+  .summary ul { margin: 0; padding-left: 20px; }
+  h2 {
+    font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.15;
+    margin: 36px 0 10px; padding-top: 16px; border-top: 1px solid var(--rule);
+  }
+  main p, main li { color: var(--body-fg); }
+  main ul, main ol { padding-left: 22px; }
+  main li { margin-bottom: 6px; }
+  strong { color: var(--fg); }
+
+  footer.foot {
+    border-top: 2px solid var(--line); padding-block: 24px 40px;
+    display: grid; grid-template-columns: 1fr auto; gap: 16px;
+    font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.7;
+  }
+  footer.foot .legal { text-align: right; }
+  footer.foot a { color: var(--body-fg); text-decoration-color: var(--rule); }
+  footer.foot a:hover { color: var(--accent); }
+  @media (max-width: 640px) {
+    footer.foot { grid-template-columns: 1fr; }
+    footer.foot .legal { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="brand" href="/"><img src="/logo.svg" alt="" width="26" height="26"> Timberseek</a>
+    <span class="links">
+      <a href="/terms" aria-current="page">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/refunds">Refunds</a>
+    </span>
+  </nav>
+  <main>
+    <span class="eyebrow">Legal</span>
+    <h1>Terms of Service</h1>
+    <p class="effective">Effective November 24, 2026 · Timberseek LLC</p>
+
+    <div class="summary">
+      <p>The short version</p>
+      <ul>
+        <li>The Builder Feed costs $499 per month per market. You pay the first month when you sign up.</li>
+        <li>You're billed every month until you cancel. Cancel any time; there's no contract.</li>
+        <li>Your first paid month is refundable. See the <a href="/refunds">Refund Policy</a>.</li>
+        <li>The data comes from public permit records. We work to keep it accurate, but we can't guarantee it.</li>
+        <li>When you contact builders from the feed, you're responsible for following marketing and calling laws.</li>
+      </ul>
+      <p style="margin-top:10px;font-weight:400;">This summary is for convenience. The full terms below are what apply.</p>
+    </div>
+
+    <h2>1. Who we are and what these terms cover</h2>
+    <p>These Terms of Service ("Terms") are an agreement between Timberseek LLC, a Florida limited liability company
+       ("Timberseek," "we," "us"), and the business that signs up for our service ("you"). They cover the Timberseek
+       website at timberseek.co, the Builder Feed, Account Watch, market reports, free sample reports, the Quote Desk, and anything
+       else we provide to you (together, the "Service").</p>
+    <p>By subscribing, requesting a sample report, or using the Service, you agree to these Terms. If you're signing up
+       for a company, you confirm that you're authorized to accept these Terms for it. The Service is for businesses only,
+       not for personal or household use.</p>
+
+    <h2>2. The Service</h2>
+    <p>The Builder Feed is a weekly report, delivered by email every Monday, of construction permit activity in the market
+       you subscribe to. It includes new builders, changes in permit counts, new subdivisions, and a scored list of builders
+       with the contact details that appear on public permit records. Account Watch tracks the builder accounts you send us.</p>
+    <p>A "market" is the metro area, county, or city named on your subscription (for example, Raleigh–Durham–Cary, NC, or
+       Miami-Dade County, FL). Each market is a separate subscription.</p>
+    <p>We may improve, change, or add features over time. If we remove a core part of the Service you're paying for, we'll
+       tell you in advance and you may cancel and receive a prorated refund for the unused part of that month.</p>
+
+    <h2>3. Free sample report and signing up</h2>
+    <ul>
+      <li>Before you subscribe, you can ask for a free sample report for your market. It's free, needs no payment details,
+          and doesn't sign you up for anything.</li>
+      <li>When you subscribe through our checkout, you pay for your first month at signup, and your subscription renews
+          monthly from that date.</li>
+      <li>After signup, you fill in a job profile (your location, delivery radius, the jobs you supply, and your current
+          builder accounts). Your first feed arrives the Monday after your profile is complete.</li>
+    </ul>
+
+    <h2>4. Pricing, billing and automatic renewal</h2>
+    <ul>
+      <li><strong>Builder Feed:</strong> $499 per month, per market. Unlimited users on your account.</li>
+      <li><strong>Quote Desk for reps:</strong> $749 per month, per market, for independent, self-employed reps. Includes up
+          to 10 builder quote requests a month. The Builder Feed is optional.</li>
+      <li><strong>Quote Desk for teams:</strong> from $1,500 per month, per market, with an exclusive territory for your trade.
+          Includes the Builder Feed. The exact price is set in a written quote before you're billed. Pilots are free until
+          you agree in writing to a paid plan.</li>
+      <li><strong>Quote requests:</strong> we introduce builders who ask for a quote, but we don't guarantee any number of
+          requests, quotes, or sales.</li>
+      <li><strong>Automatic renewal:</strong> Paid subscriptions renew automatically every month on the same date, and we
+          charge the payment method on file each month until you cancel.</li>
+      <li><strong>No commission and no contract.</strong> The monthly fee is the only charge. We don't take a share of any
+          sale you make.</li>
+      <li><strong>Payment processing:</strong> Payments are processed by Stripe. We don't store your full card number.</li>
+      <li><strong>Taxes:</strong> Prices don't include sales or similar taxes. Where tax applies, it will be shown on your invoice.</li>
+      <li><strong>Failed payments:</strong> If a payment fails, we'll let you know and retry. If it still can't be collected
+          after 14 days, we may pause your Service until it's resolved.</li>
+      <li><strong>Price changes:</strong> We'll give you at least 30 days' notice by email before any price increase. The
+          new price applies from your next billing date after the notice period, and you may cancel before it takes effect.</li>
+    </ul>
+
+    <h2>5. Cancelling</h2>
+    <p>You can cancel any time in our billing portal (linked from timberseek.co and your receipts), or by emailing
+       <a href="mailto:hello@timberseek.co">hello@timberseek.co</a>. Cancellation stops future charges. Your Service continues
+       until the end of the month you've already paid for. Apart from the first-month refund described in our
+       <a href="/refunds">Refund Policy</a>, we don't give partial refunds for unused time.</p>
+    <p>We may suspend or end your account if you break these Terms, for example by reselling the data or failing to pay.
+       If we end your account without cause, we'll refund the unused part of your current month.</p>
+
+    <h2>6. The data and how you may use it</h2>
+    <p>The Builder Feed is built from public construction permit records published by cities and counties, combined with
+       our own scoring and analysis.</p>
+    <ul>
+      <li><strong>Accuracy.</strong> Public records can be incomplete, late, or wrong, and builders' contact details change.
+          We work to keep the feed accurate, but we don't guarantee that any permit, contact detail, score, or report is
+          complete or correct.</li>
+      <li><strong>Your license.</strong> While your subscription is active, you may use the feed for your own company's
+          sales and business planning, and share it with your own employees.</li>
+      <li><strong>No resale.</strong> You may not resell, republish, or share the feed outside your company, or use it to
+          build a competing product.</li>
+      <li><strong>Contacting builders.</strong> When you email, call, or text builders, you're responsible for following the
+          laws that apply, including the CAN-SPAM Act, the Telephone Consumer Protection Act, Do Not Call rules, and any
+          state or local rules. Honor every opt-out request you receive.</li>
+      <li><strong>Removal requests.</strong> If a builder asks us to stop including their contact details, we'll remove them
+          from future feeds.</li>
+    </ul>
+
+    <h2>7. Your information and your builder accounts</h2>
+    <p>You keep ownership of the information you give us, such as your address, delivery radius, and your list of builder
+       accounts. You give us permission to use it only to provide and improve the Service for you. We don't share your
+       builder accounts with other customers. See our <a href="/privacy">Privacy Policy</a> for details.</p>
+
+    <h2>8. Acceptable use</h2>
+    <p>You agree not to: misuse or try to disrupt the Service; try to access accounts or data that aren't yours; scrape or
+       copy the Service in bulk beyond what your subscription includes; or use the Service for anything unlawful.</p>
+
+    <h2>9. Our property</h2>
+    <p>The Service, our software, scoring methods, reports, and the Timberseek name and logo belong to Timberseek LLC.
+       These Terms don't give you any ownership of them. If you send us suggestions, we may use them without owing you anything.</p>
+
+    <h2>10. Disclaimer</h2>
+    <p>Except as stated in these Terms, the Service is provided "as is" and "as available." To the fullest extent the law
+       allows, we disclaim all other warranties, express or implied, including warranties of merchantability, fitness for
+       a particular purpose, and accuracy. We don't promise that the Service will produce any particular number of leads,
+       quotes, or sales.</p>
+
+    <h2>11. Limitation of liability</h2>
+    <p>To the fullest extent the law allows: (a) neither party is liable to the other for lost profits, lost revenue, or
+       indirect, incidental, special, or consequential damages; and (b) our total liability for any claim relating to the
+       Service is limited to the amount you paid us in the 12 months before the claim arose.</p>
+
+    <h2>12. Indemnity</h2>
+    <p>You agree to defend and cover Timberseek against claims by third parties that arise from how you use the data,
+       including how you contact builders, or from your breach of these Terms.</p>
+
+    <h2>13. Governing law and disputes</h2>
+    <p>These Terms are governed by the laws of the State of Florida. If there's a problem, please email us first; most
+       issues can be solved quickly that way. Any lawsuit relating to these Terms must be brought in the state or federal
+       courts located in Miami-Dade County, Florida, and both parties agree to those courts' jurisdiction.</p>
+
+    <h2>14. Changes to these Terms</h2>
+    <p>We may update these Terms. If a change is significant, we'll email you at least 30 days before it takes effect. If
+       you keep using the Service after that, the new Terms apply. If you don't agree, you can cancel before the change
+       takes effect.</p>
+
+    <h2>15. Other terms</h2>
+    <p>These Terms, together with our Privacy Policy and Refund Policy, are the whole agreement between us about the Service.
+       If any part is found unenforceable, the rest still applies. Not enforcing a part of these Terms doesn't waive it.
+       You may not transfer your account without our written consent. Neither party is responsible for delays caused by
+       events outside its reasonable control.</p>
+
+    <h2>16. Contact</h2>
+<p>Timberseek LLC<br>
+7901 4th St N, Ste 300<br>
+St. Petersburg, FL 33702<br>
+<a href="mailto:hello@timberseek.co">hello@timberseek.co</a> · <a href="tel:+16785498320">678.549.8320</a></p>
+  </main>
+  <footer class="foot">
+    <div>
+      © 2026 Timberseek LLC · All rights reserved.<br>
+      7901 4th St N, Ste 300, St. Petersburg, FL 33702
+    </div>
+    <div class="legal">
+      <a href="mailto:hello@timberseek.co">hello@timberseek.co</a> · <a href="tel:+16785498320">678.549.8320</a><br>
+      <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a> · <a href="/refunds">Refunds</a> · <a href="/profile">Job profile</a> · <a href="/">Home</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
