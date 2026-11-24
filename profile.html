@@ -116,6 +116,9 @@
 
   .toggle { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 15px; color: var(--body-fg); }
   .toggle input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--forest); flex: none; }
+  .toggle.off { opacity: .5; }
+  .opt-tag { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px; margin-left: 4px; }
 
   .actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 8px; }
   .btn {
@@ -320,14 +323,16 @@
 
       <!-- 4. ACCOUNTS -->
       <fieldset class="step">
-        <legend class="step-head"><span class="n">4</span> Builders you already sell to</legend>
+        <legend class="step-head"><span class="n">4</span> Builders you already sell to <span class="opt-tag">Optional</span></legend>
         <div class="q">
-          <label class="label" for="accounts">Current builder accounts <span class="opt">(optional, but recommended)</span></label>
-          <p class="hint">One per line. Company name is enough; a contractor license number makes matching exact.
-            These stay off your "new builders" list.</p>
-          <textarea id="accounts" name="accounts" placeholder="Smith Custom Homes&#10;Triangle Builders LLC, NC lic. 81234&#10;Oakline Homes"></textarea>
-          <label class="toggle"><input type="checkbox" id="account_watch" name="account_watch" checked>
-            <span>Also track these in <strong>Account Watch</strong>: we'll flag accounts that are growing, going quiet, or building outside their usual area.</span></label>
+          <p class="hint" style="margin:0 0 14px;font-size:15px;color:var(--body-fg)">Fine to skip. If you'd rather keep your
+            customer list to yourself, leave this blank; your feed works the same, and you may just see some of your own
+            builders in it. Anything you list here is used only for your feed and is never shared with other subscribers.</p>
+          <label class="label" for="accounts">Current builder accounts <span class="opt">(optional)</span></label>
+          <p class="hint">One per line. Company name is enough. Listed builders stay off your "new builders" list.</p>
+          <textarea id="accounts" name="accounts" placeholder="Smith Custom Homes&#10;Triangle Builders LLC&#10;Oakline Homes"></textarea>
+          <label class="toggle" id="watchToggle"><input type="checkbox" id="account_watch" name="account_watch" disabled>
+            <span>Track these in <strong>Account Watch</strong> too: we'll flag accounts that are growing, going quiet, or building outside their usual area.</span></label>
         </div>
       </fieldset>
 
@@ -391,7 +396,7 @@
 (function () {
   // ── SETUP: paste your Formspree form ID here (the part after formspree.io/f/). ──
   // Until it's set, the form falls back to opening an email to hello@timberseek.co.
-  var FORMSPREE_ID = 'YOUR_FORM_ID';
+  var FORMSPREE_ID = 'xgakrrzl';
   var TO = 'hello@timberseek.co';
 
   var form = document.getElementById('profile');
@@ -411,6 +416,22 @@
   }
   // Prefill from link, e.g. /profile?email=…&company=…
   ['email', 'company', 'name'].forEach(function (k) { if (params.get(k)) $(k).value = params.get(k); });
+
+  // Account Watch only applies when accounts are listed; off by default.
+  function syncWatch() {
+    var has = $('accounts').value.trim().length > 0;
+    $('account_watch').disabled = !has;
+    if (!has) $('account_watch').checked = false;
+    $('watchToggle').classList.toggle('off', !has);
+  }
+  var watchTouched = false;
+  $('account_watch').addEventListener('change', function () { watchTouched = true; });
+  $('accounts').addEventListener('input', function () {
+    var had = !$('account_watch').disabled;
+    syncWatch();
+    if (!had && !$('account_watch').disabled && !watchTouched) $('account_watch').checked = true;
+  });
+  syncWatch();
 
   $('market').addEventListener('change', function () {
     var other = this.value === 'other';
@@ -461,7 +482,7 @@
       builder_size: $('builder_size').value,
       stages: values('stages'),
       existing_accounts: lines('accounts'),
-      account_watch: $('account_watch').checked,
+      account_watch: $('account_watch').checked && lines('accounts').length > 0,
       recipients: $('recipients').value.split(/[\s,;]+/).filter(Boolean),
       format: values('format')[0] || 'email_csv',
       notes: $('notes').value.trim()
